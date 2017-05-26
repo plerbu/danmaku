@@ -1,6 +1,5 @@
-/**
- * Created by blerpu on 5/26/17.
- */
+package bullet;
+
 import java.util.ArrayList;
 
 public class BulletTest {

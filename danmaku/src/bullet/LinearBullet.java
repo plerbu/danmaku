@@ -1,3 +1,5 @@
+package bullet;
+
 public class LinearBullet extends Bullet {
 
     private int slope;

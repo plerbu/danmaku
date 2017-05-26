@@ -1,3 +1,5 @@
+package bullet;
+
 public abstract class Bullet {
 
 	private int xPosition;

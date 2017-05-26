@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bullet/bullet.iml" filepath="$PROJECT_DIR$/bullet/bullet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/danmaku/danmaku.iml" filepath="$PROJECT_DIR$/danmaku/danmaku.iml" />
     </modules>
   </component>
 </project>
