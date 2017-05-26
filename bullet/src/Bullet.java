@@ -1,4 +1,3 @@
-
 public abstract class Bullet {
 
 	private int xPosition;
@@ -16,7 +15,7 @@ public abstract class Bullet {
 	public void setYPosition(int y) {
 		this.yPosition = y;
 	}
-	
+
 	public int getXPosition() {
 		return this.xPosition;
 	}
@@ -25,6 +24,10 @@ public abstract class Bullet {
 		return this.yPosition;
 	}
 
-	public abstract void bulletChangeEquation();
+	public String printPosition() {
+	    return "(" + getXPosition() + ", " + getYPosition() + ")";
+    }
+
+    public abstract void bulletMove();
 
 }
