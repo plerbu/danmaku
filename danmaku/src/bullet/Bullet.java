@@ -4,6 +4,7 @@ public abstract class Bullet {
 
 	private int xPosition;
 	private int yPosition;
+	private int dingle;
 
 	public Bullet(int xInitial, int yInitial) {
 		this.xPosition = xInitial;
