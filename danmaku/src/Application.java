@@ -14,7 +14,7 @@ public class Application extends JFrame {
     private void initUI() {
         add(new Board());
 
-        setSize(250,200);
+        setSize(400,600);
 
         setTitle("Predator Quest");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
