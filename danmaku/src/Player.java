@@ -13,7 +13,7 @@ public class Player {
     private int positionX;
     private int positionY;
     private Image image;
-    private Image dot;
+    private Image hitbox;
     private boolean focused;
 
     public Player() {
@@ -21,11 +21,12 @@ public class Player {
     }
 
     private void initPlayer() {
-        ImageIcon hitBox = new ImageIcon("")
+        ImageIcon hitBox = new ImageIcon("hitbox.png");
         ImageIcon playerImage = new ImageIcon("player.png");
         image = playerImage.getImage();
-        positionX = 200;
-        positionY = 580;
+        hitbox = hitBox.getImage();
+        positionX = 200 - 16;
+        positionY = 520;
     }
     public void move() {
         positionX += deltaX;
@@ -43,6 +44,10 @@ public class Player {
     public Image getImage() {
         return image;
     }
+
+    public Image getHitboxImage() {return hitbox; }
+
+    public boolean isFocused() {return focused;}
 
     public void keyPressed(KeyEvent e) {
 

@@ -1,14 +1,18 @@
-package bullet;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 public abstract class Bullet {
 
 	private int xPosition;
 	private int yPosition;
-	private int dingle;
+	private Image image;
 
 	public Bullet(int xInitial, int yInitial) {
 		this.xPosition = xInitial;
 		this.yPosition = yInitial;
+        ImageIcon bullet = new ImageIcon("bullet_one.png");
+        image = bullet.getImage();
 	}
 
 	public void setXPosition(int x) {
@@ -32,5 +36,7 @@ public abstract class Bullet {
     }
 
     public abstract void bulletMove();
+
+    public Image getImage() {return image;}
 
 }

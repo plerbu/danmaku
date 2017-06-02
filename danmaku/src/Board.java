@@ -16,6 +16,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Player craft;
     private final int DELAY = 10;
+    public BulletList list;
 
     public Board() {
 
@@ -29,6 +30,7 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
 
         craft = new Player();
+        list = new BulletList();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -48,6 +50,13 @@ public class Board extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
+        if (craft.isFocused()) {
+            g2d.drawImage(craft.getHitboxImage(), craft.getX() + 8, craft.getY() + 8, this);
+        }
+        for (int i = 0; i < list.BulletList.size(); i++) {
+            g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(), list.BulletList.get(i).getYPosition(), this);
+            list.BulletList.get(i).bulletMove();
+        }
     }
 
     @Override

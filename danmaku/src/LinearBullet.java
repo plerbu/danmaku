@@ -1,4 +1,6 @@
-package bullet;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 public class LinearBullet extends Bullet {
 
@@ -6,6 +8,7 @@ public class LinearBullet extends Bullet {
 
     public LinearBullet(int xInitial, int yInitial, int slope) {
         super(xInitial, yInitial);
+
         this.slope = slope;
     }
 
@@ -13,4 +16,6 @@ public class LinearBullet extends Bullet {
         super.setXPosition(super.getXPosition() - 1);
         super.setYPosition(super.getYPosition() - slope);
     }
+
+
 }
