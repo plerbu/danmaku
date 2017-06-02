@@ -13,4 +13,11 @@ public class BulletList {
         BulletList.add(new LinearBullet(2, 4,1));
     }
 
+    public void fill(int xRange, int yRange, int slopeRange) {
+            int xPosition = (int)(Math.random() * xRange);
+            int yPosition = (int)(Math.random() * yRange);
+            int slope = (int)(Math.random() * slopeRange);
+            BulletList.add(new LinearBullet(xPosition, yPosition, slope));
+    }
+
 }

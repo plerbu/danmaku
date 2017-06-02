@@ -31,6 +31,9 @@ public class Board extends JPanel implements ActionListener {
 
         craft = new Player();
         list = new BulletList();
+        Runnable r = () -> {
+
+        };
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -42,6 +45,7 @@ public class Board extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
+        drawBullets(g);
 
         Toolkit.getDefaultToolkit().sync();
     }
@@ -53,10 +57,22 @@ public class Board extends JPanel implements ActionListener {
         if (craft.isFocused()) {
             g2d.drawImage(craft.getHitboxImage(), craft.getX() + 8, craft.getY() + 8, this);
         }
+
+    }
+
+    private void drawBullets(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        if (list.BulletList.size() < 50) {
+            list.fill(400, 2, 1);
+        }
         for (int i = 0; i < list.BulletList.size(); i++) {
             g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(), list.BulletList.get(i).getYPosition(), this);
             list.BulletList.get(i).bulletMove();
+            if (list.BulletList.get(i).getXPosition() > 400 || list.BulletList.get(i).getYPosition() > 600) {
+                list.BulletList.remove(i);
+            }
         }
+
     }
 
     @Override

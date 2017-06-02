@@ -58,19 +58,19 @@ public class Player {
         }
 
         if (key == KeyEvent.VK_LEFT) {
-            deltaX = -2;
+            deltaX = -3;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            deltaX = 2;
+            deltaX = 3;
         }
 
         if (key == KeyEvent.VK_UP) {
-            deltaY = -2;
+            deltaY = -3;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            deltaY = 2;
+            deltaY = 3;
         }
 
         if (key == KeyEvent.VK_LEFT && focused) {
