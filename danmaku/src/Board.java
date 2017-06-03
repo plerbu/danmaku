@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,25 +14,22 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Player craft;
-    private final int DELAY = 10;
-    public BulletList list;
+    private final int DELAY = 20;
+    public EnemyBulletList list;
+    public PlayerBulletList playerList;
 
     public Board() {
-
         initBoard();
     }
 
     private void initBoard() {
-
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
 
         craft = new Player();
-        list = new BulletList();
-        Runnable r = () -> {
-
-        };
+        list = new EnemyBulletList();
+        playerList = new PlayerBulletList();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -45,6 +41,7 @@ public class Board extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
+        drawPlayerBullets(g);
         drawBullets(g);
 
         Toolkit.getDefaultToolkit().sync();
@@ -62,9 +59,12 @@ public class Board extends JPanel implements ActionListener {
 
     private void drawBullets(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        if (list.BulletList.size() < 50) {
+        /*
+        // Bullet Filling Method
+        if (list.EnemyBulletList.size() < 50) {
             list.fill(400, 2, 1);
         }
+        */
         for (int i = 0; i < list.BulletList.size(); i++) {
             g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(), list.BulletList.get(i).getYPosition(), this);
             list.BulletList.get(i).bulletMove();
@@ -75,15 +75,28 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
+    private void drawPlayerBullets(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        while (craft.shooting) {
+            playerList.shootBullet(craft);
+            break;
+        }
+        for (int i = 0; i < playerList.BulletList.size(); i++) {
+            g2d.drawImage(playerList.BulletList.get(i).getImage(), playerList.BulletList.get(i).getXPosition(), playerList.BulletList.get(i).getYPosition(), this);
+            playerList.BulletList.get(i).bulletMove();
+            if (playerList.BulletList.get(i).getXPosition() > 400 || playerList.BulletList.get(i).getYPosition() > 600) {
+                playerList.BulletList.remove(i);
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
         craft.move();
         repaint();
     }
 
     private class TAdapter extends KeyAdapter {
-
         @Override
         public void keyReleased(KeyEvent e) {
             craft.keyReleased(e);

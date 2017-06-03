@@ -3,14 +3,15 @@
  */
 import java.util.ArrayList;
 
-public class BulletList {
+public class EnemyBulletList {
 
     public static ArrayList<Bullet> BulletList;
 
-    public BulletList() {
+    public EnemyBulletList() {
         BulletList = new ArrayList<Bullet>();
-        BulletList.add(new LinearBullet(0,0,2));
-        BulletList.add(new LinearBullet(2, 4,1));
+
+        // Bullet Testing
+        BulletList.add(new LinearBullet(0, 0, 200, 300));
     }
 
     public void fill(int xRange, int yRange, int slopeRange) {

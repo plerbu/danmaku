@@ -15,6 +15,7 @@ public class Player {
     private Image image;
     private Image hitbox;
     private boolean focused;
+    public static boolean shooting;
 
     public Player() {
         initPlayer();
@@ -57,6 +58,10 @@ public class Player {
             focused = true;
         }
 
+        if (key == KeyEvent.VK_Z) {
+            shooting = true;
+        }
+
         if (key == KeyEvent.VK_LEFT) {
             deltaX = -3;
         }
@@ -77,7 +82,6 @@ public class Player {
             deltaX = -1;
         }
 
-
         if (key == KeyEvent.VK_RIGHT && focused) {
             deltaX = 1;
         }
@@ -97,6 +101,10 @@ public class Player {
 
         if (key == KeyEvent.VK_SHIFT) {
             focused = false;
+        }
+
+        if (key == KeyEvent.VK_Z) {
+            shooting = false;
         }
 
         if (key == KeyEvent.VK_LEFT) {
