@@ -15,8 +15,8 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Player craft;
     private final int DELAY = 20;
-    public EnemyBulletList list;
-    public PlayerBulletList playerList;
+    public static EnemyBulletSpawner list;
+    public static PlayerBulletSpawner playerList;
 
     public Board() {
         initBoard();
@@ -28,8 +28,8 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
 
         craft = new Player();
-        list = new EnemyBulletList();
-        playerList = new PlayerBulletList();
+        list = new EnemyBulletSpawner();
+        playerList = new PlayerBulletSpawner();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -41,6 +41,7 @@ public class Board extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
+        addBullets();
         drawPlayerBullets(g);
         drawBullets(g);
 
@@ -57,29 +58,32 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
+    private void addBullets() {
+        if (Board.list.BulletList.size() < 50) {
+            long lastShot = System.currentTimeMillis();
+            //if (System.currentTimeMillis() - lastShot >= 20) {
+                Board.list.addBullet(400, 2, 1);
+            //}
+        }
+    }
+
     private void drawBullets(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        /*
-        // Bullet Filling Method
-        if (list.EnemyBulletList.size() < 50) {
-            list.fill(400, 2, 1);
-        }
-        */
         for (int i = 0; i < list.BulletList.size(); i++) {
             g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(), list.BulletList.get(i).getYPosition(), this);
             list.BulletList.get(i).bulletMove();
             if (list.BulletList.get(i).getXPosition() > 400 || list.BulletList.get(i).getYPosition() > 600) {
                 list.BulletList.remove(i);
             }
+
         }
 
     }
 
     private void drawPlayerBullets(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        while (craft.shooting) {
+        if (craft.shooting) {
             playerList.shootBullet(craft);
-            break;
         }
         for (int i = 0; i < playerList.BulletList.size(); i++) {
             g2d.drawImage(playerList.BulletList.get(i).getImage(), playerList.BulletList.get(i).getXPosition(), playerList.BulletList.get(i).getYPosition(), this);
