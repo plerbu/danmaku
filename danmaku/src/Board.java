@@ -14,9 +14,12 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Player craft;
-    private final int DELAY = 20;
+    private final int DELAY = 10;
     public static EnemyBulletSpawner list;
     public static PlayerBulletSpawner playerList;
+    public static EnemySpawner enemyList;
+    public static long lastRandomShotTime;
+    public static long minMillisBetweenRandomShots = 100;
 
     public Board() {
         initBoard();
@@ -30,6 +33,7 @@ public class Board extends JPanel implements ActionListener {
         craft = new Player();
         list = new EnemyBulletSpawner();
         playerList = new PlayerBulletSpawner();
+        enemyList = new EnemySpawner();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -41,9 +45,12 @@ public class Board extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         doDrawing(g);
-        addBullets();
         drawPlayerBullets(g);
         drawBullets(g);
+        addRandomShots();
+        addEnemies();
+        drawEnemies(g);
+        enemyList.shootEnemyBullets(craft.getX(), craft.getY());
 
         Toolkit.getDefaultToolkit().sync();
     }
@@ -51,26 +58,46 @@ public class Board extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(craft.getHitboxImage(), craft.getX() + 12, craft.getY() + 12, this);
         g2d.drawImage(craft.getImage(), craft.getX(), craft.getY(), this);
         if (craft.isFocused()) {
-            g2d.drawImage(craft.getHitboxImage(), craft.getX() + 8, craft.getY() + 8, this);
+            g2d.drawImage(craft.getHitboxImage(), craft.getX() + 12, craft.getY() + 12, this);
         }
 
     }
 
-    private void addBullets() {
-        if (Board.list.BulletList.size() < 50) {
-            long lastShot = System.currentTimeMillis();
-            //if (System.currentTimeMillis() - lastShot >= 20) {
-                Board.list.addBullet(400, 2, 1);
-            //}
+    private void addEnemies() {
+        if (Board.enemyList.EnemyList.size() < 10 && enemyList.readyToSpawn()) {
+            enemyList.addEnemy(300, 50, 2, 1);
+            Board.enemyList.lastSpawnTime = System.currentTimeMillis();
         }
+    }
+
+    private void addRandomShots() {
+        if (list.BulletList.size() < 100 && readyToRandomShot()) {
+            list.BulletList.add(new LinearBullet((Math.random() * 400) + 10, Math.random() * 200,
+                    0));
+            lastRandomShotTime = System.currentTimeMillis();
+        }
+    }
+
+    private void drawEnemies(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        for (int i = 0; i < enemyList.EnemyList.size(); i++) {
+            g2d.drawImage(enemyList.EnemyList.get(i).getImage(), enemyList.EnemyList.get(i).getX(),
+                    enemyList.EnemyList.get(i).getY(), this);
+            if (enemyList.EnemyList.get(i).getX() > 400 || enemyList.EnemyList.get(i).getY() > 600) {
+                enemyList.EnemyList.remove(i);
+            }
+        }
+        enemyList.moveEnemies();
     }
 
     private void drawBullets(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         for (int i = 0; i < list.BulletList.size(); i++) {
-            g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(), list.BulletList.get(i).getYPosition(), this);
+            g2d.drawImage(list.BulletList.get(i).getImage(), list.BulletList.get(i).getXPosition(),
+                    list.BulletList.get(i).getYPosition(), this);
             list.BulletList.get(i).bulletMove();
             if (list.BulletList.get(i).getXPosition() > 400 || list.BulletList.get(i).getYPosition() > 600) {
                 list.BulletList.remove(i);
@@ -86,13 +113,16 @@ public class Board extends JPanel implements ActionListener {
             playerList.shootBullet(craft);
         }
         for (int i = 0; i < playerList.BulletList.size(); i++) {
-            g2d.drawImage(playerList.BulletList.get(i).getImage(), playerList.BulletList.get(i).getXPosition(), playerList.BulletList.get(i).getYPosition(), this);
+            g2d.drawImage(playerList.BulletList.get(i).getImage(), playerList.BulletList.get(i).getXPosition(),
+                    playerList.BulletList.get(i).getYPosition(), this);
             playerList.BulletList.get(i).bulletMove();
             if (playerList.BulletList.get(i).getXPosition() > 400 || playerList.BulletList.get(i).getYPosition() > 600) {
                 playerList.BulletList.remove(i);
             }
         }
     }
+
+    public boolean readyToRandomShot() {return System.currentTimeMillis() - lastRandomShotTime > minMillisBetweenRandomShots;}
 
     @Override
     public void actionPerformed(ActionEvent e) {
