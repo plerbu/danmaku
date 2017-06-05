@@ -14,7 +14,7 @@ public class PlayerBulletSpawner {
 
     public void shootBullet(Player p) {
         if (!PlayerBullet.readyToShoot()) return;
-        BulletList.add(new PlayerBullet(p.getX() + 12, p.getY()));
+        BulletList.add(new PlayerBullet((int)p.getX() + 12, (int)p.getY()));
         PlayerBullet.lastShotTime = System.currentTimeMillis();
     }
 

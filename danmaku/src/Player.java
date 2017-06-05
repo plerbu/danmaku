@@ -5,17 +5,19 @@
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import java.awt.Rectangle;
 
 public class Player {
 
     public static boolean shooting;
     private int deltaX;
     private int deltaY;
-    public static int positionX;
-    public static int positionY;
+    public static double positionX;
+    public static double positionY;
     private Image image;
     private Image hitbox;
     public static boolean focused;
+    private int width, height;
 
     public Player() {
         initPlayer();
@@ -28,17 +30,19 @@ public class Player {
         hitbox = hitBox.getImage();
         positionX = 200 - 16;
         positionY = 520;
+        width = hitbox.getWidth(null);
+        height = hitbox.getHeight(null);
     }
     public void move() {
         positionX += deltaX;
         positionY += deltaY;
     }
 
-    public int getX() {
+    public double getX() {
         return positionX;
     }
 
-    public int getY() {
+    public double getY() {
         return positionY;
     }
 
@@ -62,103 +66,36 @@ public class Player {
             shooting = true;
         }
 
-        if ((this.positionX >= 0) && (this.positionX <= 400)) {
-            if (key == KeyEvent.VK_LEFT) {
-                deltaX = -3;
-            }
-
-            if (key == KeyEvent.VK_RIGHT) {
-                deltaX = 3;
-            }
-            if (key == KeyEvent.VK_LEFT && focused) {
-                deltaX = -1;
-            }
-
-            if (key == KeyEvent.VK_RIGHT && focused) {
-                deltaX = 1;
-            }
-        } else if (this.positionX < 0) {
-            if (key == KeyEvent.VK_LEFT) {
-                deltaX = 0;
-            }
-
-            if (key == KeyEvent.VK_RIGHT) {
-                deltaX = 3;
-            }
-            if (key == KeyEvent.VK_LEFT && focused) {
-                deltaX = 0;
-            }
-
-            if (key == KeyEvent.VK_RIGHT && focused) {
-                deltaX = 1;
-            }
-        } else if (this.positionX > 400) {
-            if (key == KeyEvent.VK_LEFT) {
-                deltaX = -3;
-            }
-
-            if (key == KeyEvent.VK_RIGHT) {
-                deltaX = 0;
-            }
-            if (key == KeyEvent.VK_LEFT && focused) {
-                deltaX = -1;
-            }
-
-            if (key == KeyEvent.VK_RIGHT && focused) {
-                deltaX = 0;
-            }
+        if (key == KeyEvent.VK_LEFT) {
+            deltaX = -3;
         }
 
-        if ((this.positionY >= 0) && (this.positionY <= 600)) {
-            if (key == KeyEvent.VK_UP) {
-                deltaY = -3;
-            }
-
-            if (key == KeyEvent.VK_DOWN) {
-                deltaY = 3;
-            }
-
-            if (key == KeyEvent.VK_UP && focused) {
-                deltaY = -1;
-            }
-
-            if (key == KeyEvent.VK_DOWN && focused) {
-                deltaY = 1;
-            }
-        } else if (this.positionY < 0) {
-            if (key == KeyEvent.VK_UP) {
-                deltaY = 0;
-            }
-
-            if (key == KeyEvent.VK_DOWN) {
-                deltaY = 3;
-            }
-
-            if (key == KeyEvent.VK_UP && focused) {
-                deltaY = 0;
-            }
-
-            if (key == KeyEvent.VK_DOWN && focused) {
-                deltaY = 1;
-            }
-        } else if (this.positionY > 600) {
-            if (key == KeyEvent.VK_UP) {
-                deltaY = -3;
-            }
-
-            if (key == KeyEvent.VK_DOWN) {
-                deltaY = 0;
-            }
-
-            if (key == KeyEvent.VK_UP && focused) {
-                deltaY = -1;
-            }
-
-            if (key == KeyEvent.VK_DOWN && focused) {
-                deltaY = 0;
-            }
+        if (key == KeyEvent.VK_RIGHT) {
+            deltaX = 3;
+        }
+        if (key == KeyEvent.VK_LEFT && focused) {
+            deltaX = -1;
         }
 
+        if (key == KeyEvent.VK_RIGHT && focused) {
+            deltaX = 1;
+        }
+
+        if (key == KeyEvent.VK_UP) {
+            deltaY = -3;
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            deltaY = 3;
+        }
+
+        if (key == KeyEvent.VK_UP && focused) {
+            deltaY = -1;
+        }
+
+        if (key == KeyEvent.VK_DOWN && focused) {
+            deltaY = 1;
+        }
 
     }
 
@@ -186,9 +123,12 @@ public class Player {
             deltaY = 0;
         }
 
+        deltaY = 0;
         if (key == KeyEvent.VK_DOWN) {
-            deltaY = 0;
         }
     }
 
+    public Rectangle getBounds() {
+        return new Rectangle((int)positionX, (int)positionY, width, height);
+    }
 }

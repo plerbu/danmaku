@@ -17,18 +17,12 @@ public class EnemySpawner {
     public void addEnemy(int xInitialRange, int yInitialRange, double deltaXRange, double deltaYRange) {
         int xInitial = (int)(Math.random() * xInitialRange);
         int yInitial = (int)(Math.random() * yInitialRange);
-        double deltaX = (Math.random() * deltaXRange) - 1;
+        double deltaX = (Math.random() * deltaXRange) - 0.5;
         double deltaY = (Math.random() * deltaYRange) ;
         EnemyList.add(new Enemy(xInitial, yInitial, deltaX, deltaY));
     }
 
-    public void shootEnemyBullets(int playerX, int playerY) {
-        for (Enemy enemy : EnemyList) {
-            if (!enemy.readyToShoot()) return;
-            enemy.shoot(playerX, playerY);
-            enemy.lastShotTime = System.currentTimeMillis();
-        }
-    }
+
 
     public void moveEnemies() {
         for (Enemy enemy : EnemyList) {

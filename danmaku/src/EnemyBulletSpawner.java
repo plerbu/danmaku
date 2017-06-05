@@ -18,10 +18,10 @@ public class EnemyBulletSpawner {
         // BulletList.add(new LinearBullet(0, 0, 200, 300));
     }
 
-    public void addBullet(int xRange, int yRange, int slopeRange) {
-            int xPosition = (int)(Math.random() * xRange);
-            int yPosition = (int)(Math.random() * yRange);
-            int slope = (int)(Math.random() * slopeRange);
+    public void addBullet(double xRange, double yRange, double slopeRange) {
+            double xPosition = (int)(Math.random() * xRange);
+            double yPosition = (int)(Math.random() * yRange);
+            double slope = (int)(Math.random() * slopeRange);
             BulletList.add(new LinearBullet(xPosition, yPosition, slope));
     }
 

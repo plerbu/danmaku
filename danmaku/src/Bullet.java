@@ -1,17 +1,21 @@
-import java.awt.Image;
+import java.awt.*;
 import javax.swing.ImageIcon;
 
 public abstract class Bullet {
 
 	private double xPosition;
 	private double yPosition;
-	private Image image;
+    private Image image;
+    private int width, height;
+
 
 	public Bullet(double xInitial, double yInitial) {
 		this.xPosition = xInitial;
 		this.yPosition = yInitial;
-        ImageIcon bullet = new ImageIcon("bullet_one.png");
+		ImageIcon bullet = new ImageIcon("bullet_one.png");
         image = bullet.getImage();
+        width = image.getWidth(null);
+        height = image.getHeight(null);
 	}
 
 	public void setXPosition(double x) {
@@ -22,9 +26,13 @@ public abstract class Bullet {
 		this.yPosition = y;
 	}
 
-	public int getXPosition() { return (int)Math.round(this.xPosition); }
+	public int getXPosition() { return (int)(this.xPosition); }
 
-	public int getYPosition() { return (int)Math.round(this.yPosition);}
+	public double getXPositionDouble() {return this.xPosition;}
+
+	public int getYPosition() { return (int)(this.yPosition);}
+
+	public double getYPositionDouble() {return this.yPosition;}
 
 	public String printPosition() {
 	    return "(" + getXPosition() + ", " + getYPosition() + ")";
@@ -34,4 +42,7 @@ public abstract class Bullet {
 
     public Image getImage() {return image;}
 
+    public Rectangle getBounds() {
+        return new Rectangle((int)xPosition, (int)yPosition, width, height);
+    }
 }
